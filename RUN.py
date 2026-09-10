@@ -2,6 +2,7 @@
 """
 Licensed @C.TR
 """
+
 import numpy
 
 import norm
