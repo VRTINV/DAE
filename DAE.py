@@ -58,7 +58,7 @@ class model():
         return Y1,Y2,H1,H2
     def dE(MODEL,X,S):
         Y1,Y2,H1,H2=model.forward_compute(MODEL,X)
-        E2=numpy.multiply(Y2-S,H2)
+        E2=Y2-S
         dE2=numpy.matmul(numpy.transpose(Y1),E2)
         E1=numpy.multiply(numpy.transpose(numpy.matmul(MODEL.T2,numpy.transpose(E2))),H1)
         dE1=numpy.matmul(numpy.transpose(X),E1)
