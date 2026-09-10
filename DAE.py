@@ -23,7 +23,7 @@ class fun:
         if x > mparam.A/2 - mparam.epsilon and x < mparam.A/2:
             return float(-1/(mparam.epsilon*mparam.A)*x-1/(2*mparam.epsilon))
         if x >= mparam.A/2:
-            return 0
+            return float(0)
 
 class model():
     def __init__(self,N,M,D):
