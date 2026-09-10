@@ -17,7 +17,7 @@ class noise:
                         value=0
                     if p >= 0.1 and p<= 0.9:
                         value=y
-                    if p>0.9:
+                    if p > 0.9:
                         value=1
                 if y==0 or y==1:
                     value=y
