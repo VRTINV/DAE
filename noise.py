@@ -7,9 +7,9 @@ import numpy
 
 class noise:
     def make_thresh(X):
-        XNEW=[]
+        XNEW=numpy.array([])
         for x in X:
-            xNEWline=[]
+            xNEWline=numpy.array([])
             for y in x:
                 if y != 0 and y!=1:
                     p=numpy.random.random()
@@ -21,7 +21,11 @@ class noise:
                         value=1
                 if y==0 or y==1:
                     value=y
-                xNEWline.append(value)
+                xNEWline=numpy.concatenate([xNEWline,[value]],axis=0)
+            if len(XNEW)==0:
+                XNEW=numpy.array([xNEWline])
+            if len(XNEW)>0:
+                xNEWline=numpy.concatenate([XNEW,[xNEWline]],axis=0)
             XNEW.append(xNEWline)
         return numpy.array(XNEW)
         

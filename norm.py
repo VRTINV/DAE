@@ -23,7 +23,7 @@ class normalize:
             if len(U)==0:
                 U=numpy.array([h])
             if len(U)>0:
-                U=numpy.concatenate((U,[h]),axis=0)
+                U=numpy.concatenate([U,[h]],axis=0)
             mvec=numpy.concatenate([mvec,[m]],axis=0)
             Mvec=numpy.concatenate([Mvec,[M]],axis=0)
         return [numpy.array(U),[mvec.mean(),Mvec.mean()]]
