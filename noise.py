@@ -24,9 +24,8 @@ class noise:
                 xNEWline=numpy.concatenate([xNEWline,[value]],axis=0)
             if len(XNEW)==0:
                 XNEW=numpy.array([xNEWline])
-            if len(XNEW)>0:
-                xNEWline=numpy.concatenate([XNEW,[xNEWline]],axis=0)
-            XNEW.append(xNEWline)
-        return numpy.array(XNEW)
+            if len(XNEW)>1:
+                XNEW=numpy.concatenate([XNEW,[xNEWline]],axis=0)
+        return XNEW
         
 

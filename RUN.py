@@ -21,8 +21,8 @@ i=10
 RAW_DATA=generate_data.generate(N,M)
 
 #RUN1
-[X_current,[mu0,sigma0]]=norm.normalize.global_z(RAW_DATA)
-[X_current,[minimum,maximum]]=norm.normalize.global_m(X_current)
+X_current,[mu0,sigma0]=norm.normalize.global_z(RAW_DATA)
+X_current,[minimum,maximum]=norm.normalize.global_m(X_current)
 
 #RUN2 
 Xnoise_current=noise.noise.make_thresh(X_current)
