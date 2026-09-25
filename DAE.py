@@ -3,7 +3,8 @@
 Licensed @C.TR
 """
 
-import numpy
+import random
+import pandas
     
 class fun:
     def f(x):
@@ -30,43 +31,43 @@ class model():
         self.entries=N
         self.numberfeatures1=M
         self.numberfeatures2=D
-        self.T1=numpy.random.uniform(-param.h,param.h,[self.numberfeatures1,self.numberfeatures2])
-        self.T2=numpy.random.uniform(-param.h,param.h,[self.numberfeatures2,self.numberfeatures1])
-        self.activate=numpy.vectorize(fun.f)
-        self.dactivate=numpy.vectorize(fun.g)
+        self.T1=pandas.DataFrame([[random.uniform(-param.h,param.h) for i in range(self.numberfeatures2)] for j in range(self.numberfeatures1)])
+        self.T2=pandas.DataFrame([[random.uniform(-param.h,param.h) for i in range(self.numberfeatures1)] for j in range(self.numberfeatures2)])
+        self.activate=fun.f
+        self.dactivate=fun.g
     def update(self,X,S,alpha):
         dE1,dE2=model.dE(self,X,S)
         T1temp,T2temp=self.T1-alpha*dE1,self.T2-alpha*dE2
         self.T1,self.T2=T1temp,T2temp      
     def encode(MODEL,X):
-        X1=numpy.matmul(X,MODEL.T1)
-        Y1=MODEL.activate(X1)
+        X1=X.dot(MODEL.T1)
+        Y1=X1.map(MODEL.activate)
         return Y1         
     def encode_decode(MODEL,X):
-        X1=numpy.matmul(X,MODEL.T1)
-        Y1=MODEL.activate(X1)
-        X2=numpy.matmul(Y1,MODEL.T2)
-        Y2=MODEL.activate(X2)
+        X1=X.dot(MODEL.T1)
+        Y1=X1.map(MODEL.activate)
+        X2=Y1.dot(MODEL.T2)
+        Y2=X2.map(MODEL.activate)
         return Y2
     def forward_compute(MODEL,X):
-        X1=numpy.matmul(X,MODEL.T1)
-        Y1=MODEL.activate(X1)
-        H1=MODEL.dactivate(X1)
-        X2=numpy.matmul(Y1,MODEL.T2)
-        Y2=MODEL.activate(X2)
-        H2=MODEL.dactivate(X2)
+        X1=X.dot(MODEL.T1)
+        Y1=X1.map(MODEL.activate)
+        H1=X1.map(MODEL.dactivate)
+        X2=Y1.dot(MODEL.T2)
+        Y2=X2.map(MODEL.activate)
+        H2=X2.map(MODEL.dactivate)
         return Y1,Y2,H1,H2
     def dE(MODEL,X,S):
         Y1,Y2,H1,H2=model.forward_compute(MODEL,X)
         E2=Y2-S
-        dE2=numpy.matmul(numpy.transpose(Y1),E2)
-        E1=numpy.multiply(numpy.transpose(numpy.matmul(MODEL.T2,numpy.transpose(E2))),H1)
-        dE1=numpy.matmul(numpy.transpose(X),E1)
+        dE2=pandas.DataFrame.transpose(Y1).dot(E2)
+        E1=pandas.DataFrame.transpose(MODEL.T2.dot(pandas.DataFrame.transpose(E2))).mul(H1)
+        dE1=pandas.DataFrame.transpose(X).dot(E1)
         return dE1,dE2
     
     def error(MODEL,X,S):
         Y=model.encode_decode(MODEL,X)
-        return float(sum(sum(pow(Y-S,2))))/len(S)
+        return pow(Y-S,2).sum().sum()
     
 class param:
     N=int(20)

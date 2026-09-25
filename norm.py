@@ -3,30 +3,27 @@
 Licensed @C.TR
 """
 
-import numpy
+import pandas
     
 class normalize:
     def global_z(X):
-        mu=X.mean()
-        sigma=X.std()
-        return numpy.array((X-mu)/sigma),[mu,sigma]
+        mu=X.mean().pop(0)
+        sigma=X.std().pop(0)
+        return (X-mu)/sigma,[mu,sigma]
     def line_max(x):
         m=x.min()
         M=x.max()
         return (x-m)/(M-m),[m,M]
     def global_m(X):
-        U=numpy.array([])
-        mvec=numpy.array([])
-        Mvec=numpy.array([])
-        for x in X:
-            h,[m,M]=normalize.line_max(x)
-            if len(U)==0:
-                U=numpy.array([h])
-            if len(U)>1:
-                U=numpy.concatenate([U,[h]],axis=0)
-            mvec=numpy.concatenate([mvec,[m]],axis=0)
-            Mvec=numpy.concatenate([Mvec,[M]],axis=0)
-        return numpy.array(U),[mvec.mean(),Mvec.mean()]
+        U=pandas.DataFrame([])
+        mvec=pandas.DataFrame([])
+        Mvec=pandas.DataFrame([])
+        for k in X.index:
+            h,[m,M]=normalize.line_max(X.loc[k])
+            U=pandas.concat([U,pandas.DataFrame([h])],axis=0,ignore_index=True)
+            mvec=pandas.concat([mvec,pandas.DataFrame([m])],axis=0,ignore_index=True)
+            Mvec=pandas.concat([Mvec,pandas.DataFrame([M])],axis=0,ignore_index=True)
+        return U,[mvec.mean(),Mvec.mean()]
             
 
         

@@ -3,7 +3,8 @@
 Licensed @C.TR
 """
 
-import numpy
+import random
+import pandas
 
 import norm
 import DAE
@@ -11,7 +12,7 @@ import noise
 
 class generate_data:
     def generate(N,M):
-        return numpy.random.normal(0,1,[N,M])
+        return pandas.DataFrame([[random.normalvariate(0,1) for i in range(M) ] for j in range(N)])
 
 N=25
 M=100
@@ -44,5 +45,5 @@ XTEST=(XTEST-minimum)/(maximum-minimum)
     
 XR=MODEL.encode(XTEST)
 
-[XR,[mu,sigma]]=norm.normalize.global_z(XR)
+XR,[mu,sigma]=norm.normalize.global_z(XR)
     
