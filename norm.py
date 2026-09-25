@@ -22,7 +22,7 @@ class normalize:
             h,[m,M]=normalize.line_max(x)
             if len(U)==0:
                 U=numpy.array([h])
-            if len(U)>1:
+            else:
                 U=numpy.concatenate([U,[h]],axis=0)
             mvec=numpy.concatenate([mvec,[m]],axis=0)
             Mvec=numpy.concatenate([Mvec,[M]],axis=0)
