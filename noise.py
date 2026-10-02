@@ -22,7 +22,6 @@ class noise:
                         value=1
                 if y==0 or y==1:
                     value=y
-                  
                 xNEWline=pandas.concat([xNEWline,pandas.DataFrame([value])],axis=1,ignore_index=True)
             XNEW=pandas.concat([XNEW,xNEWline],axis=0,ignore_index=True)
         return XNEW
